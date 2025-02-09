@@ -29,6 +29,8 @@ const t = initTRPC.context<Context>().create({
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
+
+// Procedure helper that checks if the user is authenticated
 export const protectedProcedure = t.procedure.use(async function isAuthed(
   opts
 ) {
