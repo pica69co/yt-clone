@@ -1,10 +1,16 @@
-// import Image from "next/image";
+import { HydrateClient, trpc } from "@/trpc/server";
+import { ClientPage } from "./client";
+import { Suspense } from "react";
+
 export default function Home() {
+  void trpc.hello.prefetch({ text: "Oskar" });
   return (
     <div>
-      {/* <Image src="/logo.svg" alt="logo" width={50} height={50} />
-      <p className="text-xl font-semibold tracking-tight">NewTube</p> */}
-      I will load videos here
+      <HydrateClient>
+        <Suspense fallback={<p>Wait...</p>}>
+          <ClientPage />
+        </Suspense>
+      </HydrateClient>
     </div>
   );
 }
