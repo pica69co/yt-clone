@@ -3,8 +3,6 @@ import { trpc } from "@/trpc/client";
 import React from "react";
 
 export const ClientPage = () => {
-  const [data] = trpc.hello.useSuspenseQuery({
-    text: "Oskar from client page",
-  });
-  return <div>{data.greeting}</div>;
+  const [data] = trpc.categories.getMany.useSuspenseQuery();
+  return <div>{JSON.stringify(data)}</div>;
 };

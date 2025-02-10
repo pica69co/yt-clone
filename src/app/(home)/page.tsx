@@ -3,7 +3,7 @@ import { ClientPage } from "./client";
 import { Suspense } from "react";
 
 export default function Home() {
-  void trpc.hello.prefetch({ text: "Oskar" });
+  void trpc.categories.getMany.prefetch();
   return (
     <div>
       <HydrateClient>
