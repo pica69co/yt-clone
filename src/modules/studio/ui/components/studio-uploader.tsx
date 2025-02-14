@@ -14,6 +14,12 @@ interface StudioUploaderProps {
 
 const UPLOADER_ID = "video-uploader";
 
+/**
+ * StudioUploader component
+ *
+ * @param endpoint - The endpoint to upload the video
+ * @param onSuccess - Function to be called after the video is uploaded
+ */
 export const StudioUploader = ({
   endpoint,
   onSuccess,
