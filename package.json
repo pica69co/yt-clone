@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.11.1",
-    "@google/generative-ai": "^0.21.0",
     "@hookform/resolvers": "^3.10.0",
     "@mux/mux-node": "^9.0.1",
     "@mux/mux-player-react": "^3.3.0",
