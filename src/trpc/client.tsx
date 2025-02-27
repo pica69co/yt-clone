@@ -8,7 +8,7 @@ import { createTRPCReact } from "@trpc/react-query";
 import { useState } from "react";
 import { makeQueryClient } from "./query-client";
 import type { AppRouter } from "./routers/_app";
-import { APP_URL } from "@/modules/videos/constants";
+import { APP_URL } from "@/constants";
 export const trpc = createTRPCReact<AppRouter>();
 let clientQueryClientSingleton: QueryClient;
 function getQueryClient() {
@@ -22,8 +22,8 @@ function getQueryClient() {
 function getUrl() {
   const base = (() => {
     if (typeof window !== "undefined") return "";
-    if (APP_URL) return `https://${APP_URL}`;
-    return "http://localhost:3000";
+
+    return APP_URL;
   })();
   return `${base}/api/trpc`;
 }

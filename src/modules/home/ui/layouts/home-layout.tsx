@@ -7,13 +7,13 @@ interface HomeLayoutProps {
 }
 export const HomeLayout = ({ children }: HomeLayoutProps) => {
   return (
-    <SidebarProvider className="">
+    <SidebarProvider>
       <div className="w-full">
         <HomeNavbar />
-      </div>
-      <div className="flex min-h-screen pt-[4rem]">
-        <HomeSidebar />
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <div className="flex min-h-screen pt-[4rem]">
+          <HomeSidebar />
+          <main className="flex-1 overflow-y-auto">{children}</main>
+        </div>
       </div>
     </SidebarProvider>
   );

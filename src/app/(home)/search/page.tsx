@@ -1,7 +1,7 @@
+import React from "react";
 import { DEFAULT_LIMIT } from "@/constants";
 import { SearchView } from "@/modules/search/ui/views/search-view";
 import { HydrateClient, trpc } from "@/trpc/server";
-import React from "react";
 
 interface PageProps {
   searchParams: Promise<{
@@ -9,6 +9,8 @@ interface PageProps {
     categoryId: string | undefined;
   }>;
 }
+
+export const dynamic = "force-dynamic";
 
 const Page = async ({ searchParams }: PageProps) => {
   const { query, categoryId } = await searchParams;
