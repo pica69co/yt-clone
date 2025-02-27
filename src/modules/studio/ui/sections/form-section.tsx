@@ -50,7 +50,7 @@ import Link from "next/link";
 import { snakeCaseToTitle } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
+import { APP_URL, THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
 import { ThumbnailUploadModal } from "../components/thumbnail-upload-modal";
 import { ThumbnailGenerateModal } from "../components/thumbnail-generate-modal";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -210,9 +210,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     update.mutate(data);
   };
 
-  const fullUrl = `${
-    process.env.VERCEL_URL || "http://localhost:3000"
-  }/videos/${video.id}`;
+  const fullUrl = `${APP_URL || "http://localhost:3000"}/videos/${video.id}`;
   const [isCopied, setIsCopied] = useState(false);
   const onCopy = async () => {
     await navigator.clipboard.writeText(fullUrl);
