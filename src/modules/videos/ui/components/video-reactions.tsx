@@ -28,7 +28,7 @@ export const VideoReactions = ({
   const like = trpc.videoReactions.like.useMutation({
     onSuccess: () => {
       utils.videos.getOne.invalidate({ id: videoId });
-      // TODO: Invalidate "liked" playlist
+      utils.playLists.getLiked.invalidate();
     },
     onError: (error) => {
       toast.error("something went wrong");
@@ -38,7 +38,19 @@ export const VideoReactions = ({
       }
     },
   });
-  const dislike = trpc.videoReactions.dislike.useMutation();
+  const dislike = trpc.videoReactions.dislike.useMutation({
+    onSuccess: () => {
+      utils.videos.getOne.invalidate({ id: videoId });
+      utils.playLists.getLiked.invalidate();
+    },
+    onError: (error) => {
+      toast.error("something went wrong");
+
+      if (error.data?.code === "UNAUTHORIZED") {
+        clerk.openSignIn();
+      }
+    },
+  });
 
   return (
     <div className="flex items-center flex-none">
