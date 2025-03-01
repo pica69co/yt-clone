@@ -6,8 +6,7 @@ const Page = async () => {
   void trpc.playLists.getLiked.prefetchInfinite({ limit: DEFAULT_LIMIT });
   return (
     <HydrateClient>
-      {" "}
-      <LikedView />{" "}
+      <LikedView />
     </HydrateClient>
   );
 };
