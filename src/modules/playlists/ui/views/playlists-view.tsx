@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
-import { PlaylistCreateModal } from "../components/playlist-create-modal";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import PlaylistCreateModal from "../components/playlist-create-modal";
 import { PlaylistVideosSection } from "../sections/playlist-videos-section";
 
 export const PlaylistsView = () => {
@@ -16,8 +16,7 @@ export const PlaylistsView = () => {
         onOpenChange={setCreateModalOpen}
       />
       <div className="flex justify-between items-center">
-        {" "}
-        <div className="">
+        <div>
           <h1 className="text-2xl font-bold">Play Lists</h1>
           <p className="text-xs text-muted-foreground">
             Collections you have created

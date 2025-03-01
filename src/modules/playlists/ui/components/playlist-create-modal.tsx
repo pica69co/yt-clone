@@ -1,3 +1,10 @@
+import { toast } from "sonner";
+import React from "react";
+import { trpc } from "@/trpc/client";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
 import { ResponsiveModal } from "@/components/responsive-modal";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,13 +17,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { trpc } from "@/trpc/client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
-
 interface PlaylistCreateModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -26,7 +26,7 @@ const formSchema = z.object({
   name: z.string().min(1),
 });
 
-export const PlaylistCreateModal = ({
+const PlaylistCreateModal = ({
   open,
   onOpenChange,
 }: PlaylistCreateModalProps) => {
@@ -56,40 +56,44 @@ export const PlaylistCreateModal = ({
   };
 
   return (
-    <ResponsiveModal
-      title="create a playlist"
-      open={open}
-      onOpenChange={onOpenChange}
-    >
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
-        >
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Playlist Name</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="playlist name" />
-                  <FormMessage />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <div className="flex">
-            <Button
-              className=""
-              type="submit"
-              disabled={generatePlaylist.isPending}
-            >
-              Create
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </ResponsiveModal>
+    <>
+      <ResponsiveModal
+        title="create a playlist"
+        open={open}
+        onOpenChange={onOpenChange}
+      >
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Playlist Name</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="playlist name" />
+                    <FormMessage />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <div className="flex">
+              <Button
+                className=""
+                type="submit"
+                disabled={generatePlaylist.isPending}
+              >
+                Create
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </ResponsiveModal>
+    </>
   );
 };
+
+export default PlaylistCreateModal;
