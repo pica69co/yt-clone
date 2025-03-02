@@ -9,6 +9,53 @@ import { z } from "zod";
 const f = createUploadthing();
 
 export const ourFileRouter = {
+  bannerUploader: f({
+    image: {
+      maxFileSize: "4MB",
+      maxFileCount: 1,
+    },
+  })
+    .middleware(async () => {
+      // This code runs on your server before upload
+      const { userId: clerkUserId } = await auth();
+
+      // If you throw, the user will not be able to upload
+      if (!clerkUserId) throw new UploadThingError("Unauthorized");
+
+      const [existingUser] = await db
+        .select()
+        .from(users)
+        .where(eq(users.clerkId, clerkUserId));
+
+      if (!existingUser) throw new UploadThingError("Unauthorized");
+
+      if (existingUser.bannerKey) {
+        const utapi = new UTApi();
+
+        await utapi.deleteFiles(existingUser.bannerKey);
+        await db
+          .update(users)
+          .set({
+            bannerUrl: null,
+            bannerKey: null,
+          })
+          .where(and(eq(users.id, existingUser.id)));
+      }
+
+      // Whatever is returned here is accessible in onUploadComplete as `metadata`
+      return { userId: existingUser.id };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      await db
+        .update(users)
+        .set({
+          bannerUrl: file.ufsUrl,
+          bannerKey: file.key,
+        })
+        .where(eq(users.id, metadata.userId));
+      return { uploadedBy: metadata.userId };
+    }),
+
   thumbnailUploader: f({
     image: {
       maxFileSize: "4MB",

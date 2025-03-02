@@ -5,7 +5,7 @@ import { toast } from "sonner";
 interface useSubscriptionProps {
   userId: string;
   isSubscribed: boolean;
-  fromVideoId: string;
+  fromVideoId?: string;
 }
 export const useSubscription = ({
   userId,
@@ -18,8 +18,9 @@ export const useSubscription = ({
   const subscribe = trpc.subscriptions.create.useMutation({
     onSuccess: () => {
       toast.success("Subscribed!");
-      // TODO: reinvalidate subscribtions.getMany, users.getOne
+
       utils.videos.getManySubscribed.invalidate();
+      utils.users.getOne.invalidate({ id: userId });
 
       if (fromVideoId) {
         utils.videos.getOne.invalidate({ id: fromVideoId });
@@ -36,9 +37,9 @@ export const useSubscription = ({
   const unsubscribe = trpc.subscriptions.remove.useMutation({
     onSuccess: () => {
       toast.success("Unsubscribed!");
-      // TODO: reinvalidate subscribtions.getMany, users.getOne
 
       utils.videos.getManySubscribed.invalidate();
+      utils.users.getOne.invalidate({ id: userId });
 
       if (fromVideoId) {
         utils.videos.getOne.invalidate({ id: fromVideoId });
