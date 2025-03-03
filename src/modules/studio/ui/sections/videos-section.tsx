@@ -115,6 +115,7 @@ export const VideosSectionSuspense = () => {
               .flatMap((page) => page.items)
               .map((video) => (
                 <Link
+                  prefetch
                   key={video.id}
                   legacyBehavior // This is a custom prop that we use to make sure that the link is opened in the same tab
                   href={`/studio/videos/${video.id}`}
